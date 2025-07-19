@@ -1,8 +1,7 @@
 @echo off
-setlocal enabledelayedexpansion
 :: =============================================================================
 ::
-::  Windows Unofficial Maintenance (WUM) v2.0 Enhanced
+::  Windows Unofficial Maintenance Script (WUMS) v2.0 Enhanced
 ::  Author: Enhanced by Claude
 ::  Purpose: Comprehensive Windows cleaning, repairing, and optimization tool
 ::  Compatible: Windows 7, 8, 8.1, 10, 11, Server 2008+
@@ -13,7 +12,7 @@ setlocal enabledelayedexpansion
 :: Initialize Variables and Check Environment
 :: -----------------------------------------------------------------------------
 set "SCRIPT_VERSION=2.0"
-set "LOG_FILE=%TEMP%\WUM_Log_%DATE:~-4%%DATE:~4,2%%DATE:~7,2%.txt"
+set "LOG_FILE=%TEMP%\WUMS_Log_%DATE:~-4%%DATE:~4,2%%DATE:~7,2%.txt"
 
 :: Detect Windows Version for compatibility
 for /f "tokens=4-6 delims=. " %%i in ('ver') do set "WIN_VER=%%i.%%j"
@@ -40,8 +39,9 @@ if !WIN_MAJOR! geq 10 (set "WIN_MODERN=1") else (set "WIN_MODERN=0")
     )
 
 :init
+setlocal enabledelayedexpansion
 :: Set console appearance and initialize
-title Windows Unofficial Maintenance (WUM) v%SCRIPT_VERSION%
+title Windows Unofficial Maintenance Script (WUMS) v%SCRIPT_VERSION%
 if !WIN_MODERN!==1 (color 0A) else (color 07)
 mode con cols=80 lines=35
 cls
@@ -52,20 +52,20 @@ cls
 :main_menu
 cls
 echo.
-echo     ██╗    ██╗██╗   ██╗███╗   ███╗
-echo     ██║    ██║██║   ██║████╗ ████║
-echo     ██║ █╗ ██║██║   ██║██╔████╔██║
-echo     ██║███╗██║██║   ██║██║╚██╔╝██║
-echo     ╚███╔███╔╝╚██████╔╝██║ ╚═╝ ██║
-echo      ╚══╝╚══╝  ╚═════╝ ╚═╝     ╚═╝
+echo    ???    ??????   ???????   ???? ???????
+echo    ???    ??????   ???????? ?????????????
+echo    ??? ?? ??????   ?????????????????????
+echo    ?????????????   ?????????????? ???????
+echo    ?????????????????????? ??? ???????????
+echo     ????????  ??????? ???     ??????????
 echo.
-echo          Windows Unofficial Maintenance v%SCRIPT_VERSION%
+echo      Windows Unofficial Maintenance Script v%SCRIPT_VERSION%
 echo     ================================================================
-echo     Windows Version: !WIN_VER! ^| Admin: YES ^| Log: WUM_Log_*.txt
+echo     Windows Version: !WIN_VER! ^| Admin: YES ^| Log: WUMS_Log_*.txt
 echo     ================================================================
 echo.
 echo     CLEANUP OPERATIONS                    SYSTEM REPAIR ^& INTEGRITY
-echo     ───────────────────                   ─────────────────────────
+echo     ???????????????????                   ?????????????????????????
 echo      1. Clear Temp Files ^& Caches         11. System File Checker (sfc)
 echo      2. Disk Cleanup Wizard                12. DISM Image Health Check
 echo      3. Browser Cache Cleanup              13. Check Disk Errors (chkdsk)
@@ -73,7 +73,7 @@ echo      4. Windows Update Cache                14. Registry Cleanup ^& Repair
 echo      5. Recycle Bin ^& Recent Items         15. Windows Store Apps Repair
 echo.
 echo     NETWORK ^& CONNECTIVITY               OPTIMIZATION ^& TWEAKS
-echo     ─────────────────────                 ──────────────────────
+echo     ?????????????????????                 ??????????????????????
 echo      6. DNS Cache ^& Network Reset          16. Defrag ^& Optimize Drives
 echo      7. Winsock ^& TCP/IP Reset             17. Services Optimization
 echo      8. Network Adapters Reset             18. Startup Programs Manager
@@ -81,7 +81,7 @@ echo      9. Firewall Rules Cleanup             19. Power Plan Optimization
 echo     10. Proxy Settings Reset               20. Visual Effects Tweaks
 echo.
 echo     MAINTENANCE ^& SECURITY               ADVANCED TOOLS
-echo     ─────────────────────────             ──────────────
+echo     ?????????????????????????             ??????????????
 echo     21. Windows Update Reset              31. Memory Diagnostic
 echo     22. System Restore Point              32. Hardware Info
 echo     23. User Account Control              33. Driver Verifier
@@ -89,7 +89,7 @@ echo     24. Windows Defender Scan             34. Event Viewer Cleanup
 echo     25. Malware ^& Virus Scan              35. Performance Monitor
 echo.
 echo     PRIVACY ^& CLEANUP                    SYSTEM INFORMATION
-echo     ────────────────────                  ──────────────────
+echo     ????????????????????                  ??????????????????
 echo     26. Privacy Settings Reset            36. System Specifications
 echo     27. Telemetry Disable                 37. Installed Programs List
 echo     28. Search Index Rebuild              38. Running Processes
@@ -97,14 +97,14 @@ echo     29. Windows Store Reset               39. Network Configuration
 echo     30. User Profile Cleanup              40. License ^& Activation
 echo.
 echo     BATCH OPERATIONS                      UTILITIES
-echo     ──────────────────                    ─────────
+echo     ??????????????????                    ?????????
 echo     41. Quick Cleanup (1,3,6,16)          46. Command Prompt
 echo     42. Full System Repair (11-15)        47. PowerShell (Admin)
 echo     43. Network Complete Reset (6-10)     48. Registry Editor
 echo     44. Privacy ^& Performance (26-30)     49. System Configuration
 echo     45. Complete Maintenance (All Safe)   50. Task Manager
 echo.
-echo      0. Exit WUM                          51. View Log File
+echo      0. Exit WUMS                          51. View Log File
 echo.
 
 set /p "choice=Enter your selection (0-51): "
@@ -194,7 +194,7 @@ if exist "%TEMP%" (
         for /d %%d in (*) do rd /s /q "%%d" >nul 2>&1
         del /f /q *.* >nul 2>&1
     ) & popd
-    echo   ✓ User temp folder cleaned
+    echo   ? User temp folder cleaned
 )
 
 echo Clearing system temporary files...
@@ -203,19 +203,19 @@ if exist "%SystemRoot%\Temp" (
         for /d %%d in (*) do rd /s /q "%%d" >nul 2>&1
         del /f /q *.* >nul 2>&1
     ) & popd
-    echo   ✓ System temp folder cleaned
+    echo   ? System temp folder cleaned
 )
 
 echo Clearing Windows prefetch...
 if exist "%SystemRoot%\Prefetch" (
     del /f /q "%SystemRoot%\Prefetch\*.pf" >nul 2>&1
-    echo   ✓ Prefetch files cleaned
+    echo   ? Prefetch files cleaned
 )
 
 echo Clearing recent files...
 if exist "%APPDATA%\Microsoft\Windows\Recent" (
     del /f /q "%APPDATA%\Microsoft\Windows\Recent\*.*" >nul 2>&1
-    echo   ✓ Recent files cleared
+    echo   ? Recent files cleared
 )
 
 echo Clearing thumbnail cache...
@@ -224,7 +224,7 @@ if exist "%LocalAppData%\Microsoft\Windows\Explorer" (
     timeout /t 2 >nul
     del /f /q "%LocalAppData%\Microsoft\Windows\Explorer\thumbcache*.db" >nul 2>&1
     start explorer.exe
-    echo   ✓ Thumbnail cache cleared
+    echo   ? Thumbnail cache cleared
 )
 
 echo.
@@ -263,14 +263,14 @@ echo.
 set "chrome_cache=%LocalAppData%\Google\Chrome\User Data\Default\Cache"
 if exist "%chrome_cache%" (
     rd /s /q "%chrome_cache%" >nul 2>&1
-    echo   ✓ Chrome cache cleared
+    echo   ? Chrome cache cleared
 )
 
 :: Firefox
 for /d %%p in ("%AppData%\Mozilla\Firefox\Profiles\*") do (
     if exist "%%p\cache2" (
         rd /s /q "%%p\cache2" >nul 2>&1
-        echo   ✓ Firefox cache cleared
+        echo   ? Firefox cache cleared
     )
 )
 
@@ -278,13 +278,13 @@ for /d %%p in ("%AppData%\Mozilla\Firefox\Profiles\*") do (
 set "edge_cache=%LocalAppData%\Microsoft\Edge\User Data\Default\Cache"
 if exist "%edge_cache%" (
     rd /s /q "%edge_cache%" >nul 2>&1
-    echo   ✓ Edge cache cleared
+    echo   ? Edge cache cleared
 )
 
 :: Internet Explorer
 if exist "%LocalAppData%\Microsoft\Windows\INetCache" (
     rd /s /q "%LocalAppData%\Microsoft\Windows\INetCache" >nul 2>&1
-    echo   ✓ Internet Explorer cache cleared
+    echo   ? Internet Explorer cache cleared
 )
 
 echo.
@@ -305,13 +305,13 @@ net stop bits >nul 2>&1
 
 if exist "%SystemRoot%\SoftwareDistribution\Download" (
     rd /s /q "%SystemRoot%\SoftwareDistribution\Download" >nul 2>&1
-    echo   ✓ Update download cache cleared
+    echo   ? Update download cache cleared
 )
 
 net start wuauserv >nul 2>&1
 net start bits >nul 2>&1
 
-echo   ✓ Windows Update services restarted
+echo   ? Windows Update services restarted
 echo.
 echo Windows Update cache cleanup completed!
 echo [%TIME%] Windows Update cache cleanup completed >> "%LOG_FILE%"
@@ -327,20 +327,20 @@ echo Emptying Recycle Bin for all drives...
 for %%i in (C D E F G H I J K L M N O P Q R S T U V W X Y Z) do (
     if exist "%%i:\$Recycle.Bin" (
         rd /s /q "%%i:\$Recycle.Bin" >nul 2>&1
-        echo   ✓ Drive %%i: Recycle Bin emptied
+        echo   ? Drive %%i: Recycle Bin emptied
     )
 )
 
 echo Clearing recent documents...
 if exist "%APPDATA%\Microsoft\Windows\Recent" (
     del /f /q "%APPDATA%\Microsoft\Windows\Recent\*.*" >nul 2>&1
-    echo   ✓ Recent documents cleared
+    echo   ? Recent documents cleared
 )
 
 echo Clearing jump lists...
 if exist "%APPDATA%\Microsoft\Windows\Recent\AutomaticDestinations" (
     del /f /q "%APPDATA%\Microsoft\Windows\Recent\AutomaticDestinations\*.*" >nul 2>&1
-    echo   ✓ Jump lists cleared
+    echo   ? Jump lists cleared
 )
 
 echo.
@@ -359,16 +359,16 @@ echo === DNS Cache and Network Reset ===
 echo.
 echo Flushing DNS resolver cache...
 ipconfig /flushdns >nul 2>&1
-echo   ✓ DNS cache flushed
+echo   ? DNS cache flushed
 
 echo Releasing and renewing IP configuration...
 ipconfig /release >nul 2>&1
 ipconfig /renew >nul 2>&1
-echo   ✓ IP configuration renewed
+echo   ? IP configuration renewed
 
 echo Registering DNS...
 ipconfig /registerdns >nul 2>&1
-echo   ✓ DNS registration completed
+echo   ? DNS registration completed
 
 echo.
 echo DNS and network reset completed!
@@ -386,15 +386,15 @@ if /i not "%confirm%"=="Y" goto main_menu
 
 echo Resetting Winsock catalog...
 netsh winsock reset >nul 2>&1
-echo   ✓ Winsock catalog reset
+echo   ? Winsock catalog reset
 
 echo Resetting TCP/IP stack...
 netsh int ip reset >nul 2>&1
-echo   ✓ TCP/IP stack reset
+echo   ? TCP/IP stack reset
 
 echo Resetting Windows Firewall...
 netsh advfirewall reset >nul 2>&1
-echo   ✓ Windows Firewall reset
+echo   ? Windows Firewall reset
 
 echo.
 echo Network stack reset completed! A restart is recommended.
@@ -415,7 +415,7 @@ for /f "skip=3 tokens=3*" %%i in ('netsh interface show interface') do (
         netsh interface set interface "%%j" disabled >nul 2>&1
         timeout /t 2 >nul
         netsh interface set interface "%%j" enabled >nul 2>&1
-        echo   ✓ Reset adapter: %%j
+        echo   ? Reset adapter: %%j
     )
 )
 
@@ -459,8 +459,8 @@ reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings" /v Pr
 reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings" /v ProxyServer /f >nul 2>&1
 reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings" /v ProxyOverride /f >nul 2>&1
 
-echo   ✓ Internet Explorer proxy settings reset
-echo   ✓ System proxy settings reset
+echo   ? Internet Explorer proxy settings reset
+echo   ? System proxy settings reset
 
 echo.
 echo Proxy settings reset completed!
@@ -615,8 +615,8 @@ reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "" /f >nul 2>
 reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU" /f >nul 2>&1
 reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\TypedPaths" /f >nul 2>&1
 
-echo   ✓ Registry cleaned and optimized
-echo   ✓ Backup saved to: %TEMP%\registry_backup_*.reg
+echo   ? Registry cleaned and optimized
+echo   ? Backup saved to: %TEMP%\registry_backup_*.reg
 
 echo.
 echo Registry cleanup completed!
@@ -632,10 +632,10 @@ if !WIN_MODERN!==1 (
     echo Repairing Windows Store and built-in apps...
     
     powershell -Command "Get-AppxPackage -AllUsers | Foreach {Add-AppxPackage -DisableDevelopmentMode -Register \"$($_.InstallLocation)\AppXManifest.xml\"}" >nul 2>&1
-    echo   ✓ Store apps repaired
+    echo   ? Store apps repaired
     
     wsreset.exe >nul 2>&1
-    echo   ✓ Windows Store cache reset
+    echo   ? Windows Store cache reset
     
     echo.
     echo Windows Store apps repair completed!
@@ -693,14 +693,14 @@ echo Optimizing services...
 set "services_to_manual=Themes UxSms TabletInputService WSearch Spooler"
 for %%s in (!services_to_manual!) do (
     sc config "%%s" start= demand >nul 2>&1
-    echo   ✓ %%s set to manual
+    echo   ? %%s set to manual
 )
 
 :: Disable unnecessary services (carefully selected)
 if !WIN_MODERN!==1 (
     sc config "DiagTrack" start= disabled >nul 2>&1
     sc config "dmwappushservice" start= disabled >nul 2>&1
-    echo   ✓ Telemetry services disabled
+    echo   ? Telemetry services disabled
 )
 
 echo.
@@ -747,10 +747,10 @@ echo Optimizing power settings for performance...
 :: Set high performance plan (if available)
 powercfg /setactive 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c >nul 2>&1
 if !errorlevel!==0 (
-    echo   ✓ High Performance plan activated
+    echo   ? High Performance plan activated
 ) else (
     powercfg /setactive 381b4222-f694-41f0-9685-ff5bb260df2e >nul 2>&1
-    echo   ✓ Balanced plan activated
+    echo   ? Balanced plan activated
 )
 
 :: Optimize power settings
@@ -758,7 +758,7 @@ powercfg /change monitor-timeout-ac 15 >nul 2>&1
 powercfg /change disk-timeout-ac 0 >nul 2>&1
 powercfg /change standby-timeout-ac 0 >nul 2>&1
 
-echo   ✓ Power timeouts optimized
+echo   ? Power timeouts optimized
 echo.
 echo Power optimization completed!
 echo [%TIME%] Power optimization completed >> "%LOG_FILE%"
@@ -781,15 +781,15 @@ set /p "visual_choice=Your selection (1-4): "
 if "%visual_choice%"=="4" goto main_menu
 if "%visual_choice%"=="1" (
     reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects" /v VisualFXSetting /t REG_DWORD /d 2 /f >nul 2>&1
-    echo   ✓ Visual effects set to Best Performance
+    echo   ? Visual effects set to Best Performance
 )
 if "%visual_choice%"=="2" (
     reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects" /v VisualFXSetting /t REG_DWORD /d 0 /f >nul 2>&1
-    echo   ✓ Visual effects set to Best Appearance
+    echo   ? Visual effects set to Best Appearance
 )
 if "%visual_choice%"=="3" (
     reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects" /v VisualFXSetting /t REG_DWORD /d 1 /f >nul 2>&1
-    echo   ✓ Visual effects set to Windows default
+    echo   ? Visual effects set to Windows default
 )
 
 echo.
@@ -816,7 +816,7 @@ net stop wuauserv >nul 2>&1
 net stop cryptSvc >nul 2>&1
 net stop bits >nul 2>&1
 net stop msiserver >nul 2>&1
-echo   ✓ Services stopped
+echo   ? Services stopped
 
 echo Renaming cache folders...
 if exist "%SystemRoot%\SoftwareDistribution" (
@@ -825,14 +825,14 @@ if exist "%SystemRoot%\SoftwareDistribution" (
 if exist "%SystemRoot%\System32\catroot2" (
     ren "%SystemRoot%\System32\catroot2" "catroot2.old" >nul 2>&1
 )
-echo   ✓ Cache folders renamed
+echo   ? Cache folders renamed
 
 echo Restarting Windows Update services...
 net start wuauserv >nul 2>&1
 net start cryptSvc >nul 2>&1
 net start bits >nul 2>&1
 net start msiserver >nul 2>&1
-echo   ✓ Services restarted
+echo   ? Services restarted
 
 echo.
 echo Windows Update components reset successfully!
@@ -845,7 +845,7 @@ cls
 echo === Create System Restore Point ===
 echo.
 echo Creating system restore point...
-set "restore_desc=WUM Maintenance Restore Point - %DATE% %TIME%"
+set "restore_desc=WUMS Maintenance Restore Point - %DATE% %TIME%"
 
 if !WIN_MODERN!==1 (
     powershell -Command "Checkpoint-Computer -Description '%restore_desc%' -RestorePointType 'MODIFY_SETTINGS'" >nul 2>&1
@@ -854,7 +854,7 @@ if !WIN_MODERN!==1 (
 )
 
 if !errorlevel!==0 (
-    echo   ✓ System restore point created successfully
+    echo   ? System restore point created successfully
     echo   Description: %restore_desc%
 ) else (
     echo   ! Failed to create restore point
@@ -893,11 +893,11 @@ set /p "uac_choice=Your selection (1-3): "
 if "%uac_choice%"=="3" goto main_menu
 if "%uac_choice%"=="1" (
     reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v EnableLUA /t REG_DWORD /d 1 /f >nul 2>&1
-    echo   ✓ UAC enabled (restart required)
+    echo   ? UAC enabled (restart required)
 )
 if "%uac_choice%"=="2" (
     reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v EnableLUA /t REG_DWORD /d 0 /f >nul 2>&1
-    echo   ✓ UAC disabled (restart required)
+    echo   ? UAC disabled (restart required)
 )
 
 echo.
@@ -914,7 +914,7 @@ if !WIN_MODERN!==1 (
     echo Starting Windows Defender quick scan...
     powershell -Command "Start-MpScan -ScanType QuickScan" >nul 2>&1
     if !errorlevel!==0 (
-        echo   ✓ Quick scan completed
+        echo   ? Quick scan completed
         echo.
         echo Scan results:
         powershell -Command "Get-MpThreatDetection | Select-Object ThreatName, Resources | Format-Table -AutoSize"
@@ -939,11 +939,11 @@ echo This will perform various anti-malware checks...
 
 echo Checking for suspicious processes...
 tasklist /fi "imagename eq *.tmp" >nul 2>&1
-echo   ✓ Process check completed
+echo   ? Process check completed
 
 echo Checking startup locations...
 dir "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup" >nul 2>&1
-echo   ✓ Startup folder checked
+echo   ? Startup folder checked
 
 echo Scanning common malware locations...
 if exist "%TEMP%\*.exe" (
@@ -973,26 +973,26 @@ echo Resetting Windows privacy settings to secure defaults...
 if !WIN_MODERN!==1 (
     :: Disable location tracking
     reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location" /v Value /t REG_SZ /d "Deny" /f >nul 2>&1
-    echo   ✓ Location tracking disabled
+    echo   ? Location tracking disabled
     
     :: Disable camera access
     reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\webcam" /v Value /t REG_SZ /d "Deny" /f >nul 2>&1
-    echo   ✓ Default camera access disabled
+    echo   ? Default camera access disabled
     
     :: Disable microphone access
     reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\microphone" /v Value /t REG_SZ /d "Deny" /f >nul 2>&1
-    echo   ✓ Default microphone access disabled
+    echo   ? Default microphone access disabled
     
     :: Disable advertising ID
     reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo" /v Enabled /t REG_DWORD /d 0 /f >nul 2>&1
-    echo   ✓ Advertising ID disabled
+    echo   ? Advertising ID disabled
 ) else (
     echo Some privacy features not available on Windows !WIN_VER!
 )
 
 :: Clear activity history
 reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\ActivityFeed\Settings" /v UploadUserActivities /t REG_DWORD /d 0 /f >nul 2>&1
-echo   ✓ Activity history upload disabled
+echo   ? Activity history upload disabled
 
 echo.
 echo Privacy settings reset completed!
@@ -1009,20 +1009,20 @@ echo Disabling Windows telemetry and data collection...
 :: Disable telemetry service
 sc config "DiagTrack" start= disabled >nul 2>&1
 sc stop "DiagTrack" >nul 2>&1
-echo   ✓ Diagnostic Tracking Service disabled
+echo   ? Diagnostic Tracking Service disabled
 
 :: Disable data collection
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" /v AllowTelemetry /t REG_DWORD /d 0 /f >nul 2>&1
-echo   ✓ Telemetry collection disabled
+echo   ? Telemetry collection disabled
 
 :: Disable customer experience improvement program
 reg add "HKLM\SOFTWARE\Microsoft\SQMClient\Windows" /v CEIPEnable /t REG_DWORD /d 0 /f >nul 2>&1
-echo   ✓ CEIP disabled
+echo   ? CEIP disabled
 
 if !WIN_MODERN!==1 (
     :: Disable Cortana data collection
     reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" /v BingSearchEnabled /t REG_DWORD /d 0 /f >nul 2>&1
-    echo   ✓ Cortana data collection disabled
+    echo   ? Cortana data collection disabled
 )
 
 echo.
@@ -1046,12 +1046,12 @@ net stop "Windows Search" >nul 2>&1
 echo Deleting search index files...
 if exist "%ProgramData%\Microsoft\Search\Data" (
     rd /s /q "%ProgramData%\Microsoft\Search\Data" >nul 2>&1
-    echo   ✓ Search index deleted
+    echo   ? Search index deleted
 )
 
 echo Starting Windows Search service...
 net start "Windows Search" >nul 2>&1
-echo   ✓ Search service restarted
+echo   ? Search service restarted
 
 echo.
 echo Search index rebuild started in background.
@@ -1066,11 +1066,11 @@ echo.
 if !WIN_MODERN!==1 (
     echo Resetting Windows Store and cache...
     wsreset.exe >nul 2>&1
-    echo   ✓ Windows Store reset completed
+    echo   ? Windows Store reset completed
     
     echo Repairing Store apps...
     powershell -Command "Get-AppxPackage Microsoft.WindowsStore | Reset-AppxPackage" >nul 2>&1
-    echo   ✓ Store app repaired
+    echo   ? Store app repaired
 ) else (
     echo Windows Store is not available on this version.
     echo Version detected: !WIN_VER!
@@ -1095,20 +1095,20 @@ if exist "%LOCALAPPDATA%\Temp" (
         for /d %%d in (*) do rd /s /q "%%d" >nul 2>&1
         del /f /q *.* >nul 2>&1
     ) & popd
-    echo   ✓ Local temp cleaned
+    echo   ? Local temp cleaned
 )
 
 :: Clear browser profile data
 echo Clearing browser profiles...
 if exist "%LOCALAPPDATA%\Google\Chrome\User Data\Default\Cache" (
     rd /s /q "%LOCALAPPDATA%\Google\Chrome\User Data\Default\Cache" >nul 2>&1
-    echo   ✓ Chrome profile cleaned
+    echo   ? Chrome profile cleaned
 )
 
 :: Clear Windows error reporting
 if exist "%LOCALAPPDATA%\Microsoft\Windows\WER" (
     rd /s /q "%LOCALAPPDATA%\Microsoft\Windows\WER" >nul 2>&1
-    echo   ✓ Error reporting data cleared
+    echo   ? Error reporting data cleared
 )
 
 echo.
@@ -1199,7 +1199,7 @@ if "%verifier_choice%"=="1" (
 )
 if "%verifier_choice%"=="2" (
     verifier /reset >nul 2>&1
-    echo   ✓ Driver verification disabled
+    echo   ? Driver verification disabled
 )
 
 echo.
@@ -1223,7 +1223,7 @@ for /f "tokens=*" %%G in ('wevtutil.exe el') do (
     set /a log_count+=1
 )
 
-echo   ✓ !log_count! event logs cleared
+echo   ? !log_count! event logs cleared
 
 echo.
 echo Event logs cleanup completed!
@@ -1562,16 +1562,16 @@ echo.
 echo Complete system maintenance finished successfully!
 echo.
 echo Summary of completed tasks:
-echo ✓ Temporary files and caches cleared
-echo ✓ Browser data cleaned
-echo ✓ Network settings optimized
-echo ✓ System integrity verified and repaired
-echo ✓ Registry cleaned and optimized
-echo ✓ Drives defragmented and optimized
-echo ✓ Services optimized for performance
-echo ✓ Privacy settings secured
-echo ✓ Telemetry disabled
-echo ✓ User profile cleaned
+echo ? Temporary files and caches cleared
+echo ? Browser data cleaned
+echo ? Network settings optimized
+echo ? System integrity verified and repaired
+echo ? Registry cleaned and optimized
+echo ? Drives defragmented and optimized
+echo ? Services optimized for performance
+echo ? Privacy settings secured
+echo ? Telemetry disabled
+echo ? User profile cleaned
 echo.
 echo [%TIME%] Complete maintenance batch operation completed >> "%LOG_FILE%"
 
@@ -1618,7 +1618,7 @@ goto main_menu
 
 :view_log
 cls
-echo === WUM Log File ===
+echo === WUMS Log File ===
 echo.
 echo Log file location: %LOG_FILE%
 echo.
@@ -1629,7 +1629,7 @@ if exist "%LOG_FILE%" (
     set /p "open_log=Open log file in notepad? (Y/N): "
     if /i "%open_log%"=="Y" start notepad.exe "%LOG_FILE%"
 ) else (
-    echo No log file found. Operations will be logged as you use WUM.
+    echo No log file found. Operations will be logged as you use WUMS.
 )
 pause
 goto main_menu
@@ -1683,4 +1683,103 @@ exit /b
 for /f "skip=3 tokens=3*" %%i in ('netsh interface show interface') do (
     if not "%%i"=="Loopback" (
         netsh interface set interface "%%j" disabled >nul 2>&1
-        timeout /t
+        timeout /t 2 >nul
+        netsh interface set interface "%%j" enabled >nul 2>&1
+    )
+)
+exit /b
+
+:registry_cleanup_silent
+reg export HKLM "%TEMP%\registry_backup_HKLM.reg" /y >nul 2>&1
+reg export HKCU "%TEMP%\registry_backup_HKCU.reg" /y >nul 2>&1
+reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "" /f >nul 2>&1
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "" /f >nul 2>&1
+reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU" /f >nul 2>&1
+reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\TypedPaths" /f >nul 2>&1
+exit /b
+
+:repair_store_apps_silent
+if !WIN_MODERN!==1 (
+    powershell -Command "Get-AppxPackage -AllUsers | Foreach {Add-AppxPackage -DisableDevelopmentMode -Register \"$($_.InstallLocation)\AppXManifest.xml\"}" >nul 2>&1
+    wsreset.exe >nul 2>&1
+)
+exit /b
+
+:run_defrag_silent
+for /f "skip=1 tokens=1" %%d in ('wmic logicaldisk where "drivetype=3" get caption') do (
+    if not "%%d"=="" (
+        if !WIN_MODERN!==1 (
+            defrag %%d /O /H >nul 2>&1
+        ) else (
+            defrag %%d /A /V >nul 2>&1
+        )
+    )
+)
+exit /b
+
+:optimize_services_silent
+set "services_to_manual=Themes UxSms TabletInputService WSearch Spooler"
+for %%s in (!services_to_manual!) do (
+    sc config "%%s" start= demand >nul 2>&1
+)
+if !WIN_MODERN!==1 (
+    sc config "DiagTrack" start= disabled >nul 2>&1
+    sc config "dmwappushservice" start= disabled >nul 2>&1
+)
+exit /b
+
+:power_optimization_silent
+powercfg /setactive 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c >nul 2>&1
+if !errorlevel! neq 0 (
+    powercfg /setactive 381b4222-f694-41f0-9685-ff5bb260df2e >nul 2>&1
+)
+powercfg /change monitor-timeout-ac 15 >nul 2>&1
+powercfg /change disk-timeout-ac 0 >nul 2>&1
+powercfg /change standby-timeout-ac 0 >nul 2>&1
+exit /b
+
+:privacy_reset_silent
+if !WIN_MODERN!==1 (
+    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location" /v Value /t REG_SZ /d "Deny" /f >nul 2>&1
+    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\webcam" /v Value /t REG_SZ /d "Deny" /f >nul 2>&1
+    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\microphone" /v Value /t REG_SZ /d "Deny" /f >nul 2>&1
+    reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo" /v Enabled /t REG_DWORD /d 0 /f >nul 2>&1
+)
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\ActivityFeed\Settings" /v UploadUserActivities /t REG_DWORD /d 0 /f >nul 2>&1
+exit /b
+
+:disable_telemetry_silent
+sc config "DiagTrack" start= disabled >nul 2>&1
+sc stop "DiagTrack" >nul 2>&1
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" /v AllowTelemetry /t REG_DWORD /d 0 /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Microsoft\SQMClient\Windows" /v CEIPEnable /t REG_DWORD /d 0 /f >nul 2>&1
+if !WIN_MODERN!==1 (
+    reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" /v BingSearchEnabled /t REG_DWORD /d 0 /f >nul 2>&1
+)
+exit /b
+
+:cleanup_user_profile_silent
+if exist "%LOCALAPPDATA%\Temp" (
+    pushd "%LOCALAPPDATA%\Temp" 2>nul && (
+        for /d %%d in (*) do rd /s /q "%%d" >nul 2>&1
+        del /f /q *.* >nul 2>&1
+    ) & popd
+)
+if exist "%LOCALAPPDATA%\Google\Chrome\User Data\Default\Cache" (
+    rd /s /q "%LOCALAPPDATA%\Google\Chrome\User Data\Default\Cache" >nul 2>&1
+)
+if exist "%LOCALAPPDATA%\Microsoft\Windows\WER" (
+    rd /s /q "%LOCALAPPDATA%\Microsoft\Windows\WER" >nul 2>&1
+)
+exit /b
+
+:: =============================================================================
+:: Exit Script
+:: =============================================================================
+:exit_script
+cls
+echo.
+echo Thank you for using Windows Unofficial Maintenance Script.
+echo Exiting...
+timeout /t 2 >nul
+exit /b
